@@ -1,4 +1,4 @@
-gunicorn
+gunicorn==20.0.4
 textblob==0.15.3
 mpld3==0.3
 statsmodels==0.9.0
