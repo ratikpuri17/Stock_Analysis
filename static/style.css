@@ -1,0 +1,88 @@
+h1{
+	color:red;
+	text-align: center;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+form{
+	width: 400px;
+	height: 275px;
+	padding: 10px 20px;
+	background: #f4f7f8;
+	margin: auto;
+	padding: 20px;
+	background: #f4f7f8;
+	border-radius: 8px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+.load{
+	color:black;
+	text-align: center;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+footer {
+  display: block;
+}
+select {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	background: rgba(255,255,255,.1);
+	border: none;
+	border-radius: 4px;
+	font-size: 15px;
+	/*margin: 10px 15px 15px 15px;*/
+	outline: 0;
+	/*padding: 10px;*/
+	box-sizing: border-box; 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	background-color: #e8eeef;
+	color:black;
+	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+	height: 25px;
+	/*margin-bottom: 30px;*/
+}
+/*select{
+	-webkit-appearance: menulist-button;
+	height:35px;
+}*/
+
+
+.button {
+  background-color: blue;
+  border-radius: 2px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px 15px 15px 130px;
+  font-size: 16px;
+}
+input[type="submit"]:hover,
+input[type="button"]:hover
+{
+	background: #109177;
+}
+input[type="text"]:focus
+input[type="date"]:focus
+select:focus{
+	background: #d2d9dd;
+}
+
+label {
+    width:180px;
+    clear:left;
+    text-align:right;
+    padding-right:10px;
+}
+
+input, label, select {
+    float:left;
+}
+.element {
+
+  column-gap: 200px;
+  
+  margin-bottom: 30px;
+  
+}

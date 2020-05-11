@@ -1,0 +1,32 @@
+<html>
+
+<head>
+	<title> Stock Analysis</title>
+
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
+  <script>
+      function loading(event){
+        d=document.getElementById("text")
+        d.innerHTML+='Loading !!!';
+      }
+  </script>
+</head>
+<body>
+	<h1> Stock Analysis </h1>
+	<form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="Stock symbol" placeholder="Stock symbol" required="required" />
+        <input type="date" name="start date" placeholder="start date" required="required" />
+		<input type="date" name="end date" placeholder="end date" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large" onClick="loading(event)">Analyze</button>
+    </form>
+    <div id="text"></div>
+     <br>
+
+   <br>
+   {{ prediction_text }}
+   <br>
+   
+
+</body>
+
+</html>

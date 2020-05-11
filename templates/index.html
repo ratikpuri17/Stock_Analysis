@@ -1,0 +1,100 @@
+<html>
+
+<head>
+	<title> Stock Analysis</title>
+	<link rel="stylesheet" href="{{ url_for('static',filename='style3.css')}}">
+  
+</head>
+<body id="body">
+	<h1> Stock Analysis </h1>
+	<!-- <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="Stock symbol" placeholder="Stock symbol" required="required" />
+        <input type="date" name="start date" placeholder="start date" required="required" />
+		<input type="date" name="end date" placeholder="end date" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Analyze</button>
+    
+  </form>
+  -->
+  <form action="{{ url_for('fetch')}}" method="get">
+      <button type="submits" class="button">Data</button>
+    </form>
+    <!-- </form>  -->
+  <form action="{{ url_for('tweet')}}" method="get">
+      <button type="submits" class="button">Tweets</button>
+    </form>
+  <form action="{{ url_for('home')}}" method="get">
+      <button type="submits" class="button">Home</button>
+    </form>
+    <div id="ptext">
+   <br>
+   {{ prediction_text }}
+   <br>
+ </div>
+   <script>
+
+      // localStorage.clear();
+      var img_name= '{{ img }}';
+      var n = '{{num}}';
+      var r ='{{r}}';
+      // var img = document.createElement('img'); 
+      
+      // alert(img_name);
+      
+      if(img_name=="MOVING AVERAGE"){
+          var img = new Image();
+          // s="\\static\\images\\foo_ma"+r+".png";
+
+          img.src = "\\static\\images\\foo_ma"+r+".png";
+          img.alt="Image";
+          document.getElementById('body').appendChild(img); 
+      }
+        
+      else if(img_name=="EXPONENTIAL SMOOTHING"){
+          var img = new Image();
+          img.src = "\\static\\images\\foo_es"+r+".png";
+      
+          document.getElementById('body').appendChild(img);  
+      }
+      else if(img_name=="ARIMA"){
+          var img = new Image();
+          img.src = "\\static\\images\\foo_arima"+r+".png";
+          
+          document.getElementById('body').appendChild(img); 
+       
+      }
+      else if(img_name=="LSTM"){
+          var img = new Image();
+          img.src = "\\static\\images\\foo_lstm"+r+".png";
+          
+          document.getElementById('body').appendChild(img); 
+      }
+
+      else{
+          var img1 = new Image();
+          var img2 = new Image();
+          var img3 = new Image();
+          var img4 = new Image();
+          img1.src = "\\static\\images\\foo_ma"+r+".png";
+          img2.src = "\\static\\images\\foo_es"+r+".png";
+          img3.src = "\\static\\images\\foo_arima"+r+".png";
+          img4.src = "\\static\\images\\foo_lstm"+r+".png";
+          
+          document.getElementById('body').appendChild(img1);
+          document.getElementById('body').appendChild(img2);
+          document.getElementById('body').appendChild(img3);
+          document.getElementById('body').appendChild(img4); 
+      }
+
+
+  </script>
+   
+   <!-- <img src="\static\images\foo_arima.png" alt="Image 1"/> -->
+ <footer>
+  <p>Designed by: Ratik Puri</p>
+  <p>Contact information: <a href="ratikpuri1998@gmail.com">ratikpuri1998@gmail.com
+  </a></p>
+</footer>
+
+</body>
+
+</html>

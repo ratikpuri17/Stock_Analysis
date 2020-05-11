@@ -1,0 +1,33 @@
+h1{
+	color:red;
+	text-align: center;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+
+#text{
+	color:black;
+	text-align: center;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#ptext{
+	color:black;
+	font-weight: bold;
+	text-align: center;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+footer {
+  display: block;
+}
+.button {
+  background-color: blue;
+  border-radius: 2px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px 15px 15px 130px;
+  font-size: 16px;
+}
