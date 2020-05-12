@@ -2,9 +2,11 @@
 import random
 import datetime as dt
 import math
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import tweepy
 from matplotlib import style
 from sklearn import preprocessing
@@ -35,6 +37,7 @@ import base64
 from io import BytesIO
 from matplotlib.figure import Figure
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 n=0
 def get_stock_data(symbol, from_date, to_date):
