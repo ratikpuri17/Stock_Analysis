@@ -415,7 +415,7 @@ def LSTM_(df,seed_):
     
 def retrieving_tweets_polarity(symbol):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
+    auth.set_access_token(access_token, access_secret)
     user = tweepy.API(auth)
 
     tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
