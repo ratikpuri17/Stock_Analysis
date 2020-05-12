@@ -29,15 +29,15 @@ from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Dropout
 from sklearn.preprocessing import MinMaxScaler
-import mpld3
-import pylab
-from matplotlib.backends.backend_agg import FigureCanvasAgg
+# import mpld3
+# import pylab
+# from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 import base64
 from io import BytesIO
 from matplotlib.figure import Figure
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-
+import tkinter
 
 n=0
 def get_stock_data(symbol, from_date, to_date):
