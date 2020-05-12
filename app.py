@@ -8,7 +8,7 @@ import pickle
 
 n=0
 m=0
-app = Flask(__name__,static_folder="C:\\Users\\Ratik\\Desktop\\Project\\static")
+app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 # @app.after_request

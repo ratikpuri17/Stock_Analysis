@@ -41,6 +41,8 @@ consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
 access_token = os.environ['TWITTER_ACCESS_TOKEN']
 access_secret = os.environ['TWITTER_ACCESS_SECRET']
 
+heroku config:add TWITTER_ACCESS_SECRET=DwmcoE3D8jfuea4uWUv9m3fkZMGRQpFFnITavNgEUCHjr
+
 
 num_of_tweets=int(20)
 
@@ -83,26 +85,26 @@ def test_stationarity(timeseries):
 
 
     #Perform Dickey-Fuller test:
-    print('Results of Dickey-Fuller Test:')
+    # print('Results of Dickey-Fuller Test:')
     dftest = adfuller(timeseries, autolag='AIC')
-    print('ADF Statistic: %f ' % dftest[0])
-    print('p Statistic: %f ' % dftest[1])
+    # print('ADF Statistic: %f ' % dftest[0])
+    # print('p Statistic: %f ' % dftest[1])
     dfoutput = pd.Series(dftest[0:2], index=['open','high'])
     for key, value in dftest[4].items():
         dfoutput['Critical Value (%s)'%key] = value
     # print(dfoutput)
     if(dftest[0]<dftest[4]["5%"]):
-        print("Reject H0, Time series is Stationary")
+        # print("Reject H0, Time series is Stationary")
         return 1
     else:
-        print("Time series is not stationary")
+        # print("Time series is not stationary")
         return 0
 
 
 def make_data_stationary(tss):
     
     
-    print("Making Data Stationary....")
+    # print("Making Data Stationary....")
     # print("Log Transformations")
     ts_log = np.log(tss)
 
@@ -183,7 +185,7 @@ def moving_average(df,w,seed_):
      
     error = math.sqrt(mean_squared_error(tss, p_original[1:]))
     
-    print('Test RMSE: %.7f' % error)
+    # print('Test RMSE: %.7f' % error)
     
     p=pd.DataFrame(p_original[1:],index=df.index)
     
@@ -254,9 +256,9 @@ def exponential_smoothing(df,alpha,seed_):
     mse=mse/len(X)
     mad=mad/len(X)
     rmse=math.sqrt(mse)
-    print("Mean Squared Error : ",mse)
-    print("Mean Absolute Deviation : ",mad)
-    print("Root Mean Squared Error : ",rmse)
+    # print("Mean Squared Error : ",mse)
+    # print("Mean Absolute Deviation : ",mad)
+    # print("Root Mean Squared Error : ",rmse)
     #plt.figure(figsize=(16,8))
     
     f=forecasts
@@ -317,8 +319,8 @@ def ARIMA_forecast(df,seed_):
 #     print(len(predictions_ARIMA),len(df['Close']))
     mse=(sum((predictions_ARIMA.values-df['Close'].values)**2))/len(predictions_ARIMA)
     rmse=math.sqrt(mse)
-    print('ARIMA RMSE : %.4f' % mse)
-    plt.title('ARIMA RMSE : %.4f' % rmse)
+    # print('ARIMA RMSE : %.4f' % mse)
+    # plt.title('ARIMA RMSE : %.4f' % rmse)
     
     plt.xticks(rotation=45)
     plt.tight_layout()
@@ -436,7 +438,7 @@ def retrieving_tweets_polarity(symbol):
         tweet_list.append("<div class='tweet-body'>")
         tweet_list.append("<pre>")
         tw = tweet.full_text
-        print(tw)
+        # print(tw)
         blob = TextBlob(tw)
         polarity = 0
         for sentence in blob.sentences:
@@ -476,7 +478,7 @@ def polarity(symbol):
         tweet_list.append("<div class='tweet-body'>")
         tweet_list.append("<pre>")
 
-        print(tw)
+        # print(tw)
         tweet_list.append(tw)
         sentiment_dict = sid_obj.polarity_scores(tw)
         
@@ -498,10 +500,10 @@ def polarity(symbol):
     
     np.savetxt('tweet_file.html',tweet_list, fmt='%s',encoding="utf-8")
     if pos_count>neg_count and pos_count>net_count:
-        print("Net Sentiment is Positive")
+        # print("Net Sentiment is Positive")
         return 1
     else: 
-        print("Net Sentiment is Negative")
+        # print("Net Sentiment is Negative")
         return -1
 
 
@@ -525,7 +527,7 @@ def stock_forecasting(ts,algorithm,seed_):
     
     else:
          # In case No Algorithm is specified, return the results of the Algorithm with the Least Error
-        print("Running all Algorithms ....")
+        # print("Running all Algorithms ....")
 
         A=moving_average(ts,3,seed_)
         B=exponential_smoothing(ts,0.2,seed_)
