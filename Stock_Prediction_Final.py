@@ -12,7 +12,7 @@ from sklearn import preprocessing
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from textblob import TextBlob
-import constants as ct
+# import constants as ct
 from Tweet import Tweet
 import pandas_datareader.data as web
 from statsmodels.tsa.stattools import adfuller
@@ -35,6 +35,15 @@ from sklearn.preprocessing import MinMaxScaler
 # import base64
 # from io import BytesIO
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+consumer_key = os.environ['TWITTER_CONSUMER_KEY']
+consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
+access_token = os.environ['TWITTER_ACCESS_TOKEN']
+access_secret = os.environ['TWITTER_ACCESS_SECRET']
+
+
+num_of_tweets=int(20)
+
 
 n=0
 def get_stock_data(symbol, from_date, to_date):
@@ -405,11 +414,11 @@ def LSTM_(df,seed_):
 
     
 def retrieving_tweets_polarity(symbol):
-    auth = tweepy.OAuthHandler(ct.consumer_key, ct.consumer_secret)
-    auth.set_access_token(ct.access_token, ct.access_token_secret)
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
     user = tweepy.API(auth)
 
-    tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(ct.num_of_tweets)
+    tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
 
     tweet_list = []
     # b="""<form action="{{ url_for('predict')}}" method="get">
@@ -444,11 +453,11 @@ def retrieving_tweets_polarity(symbol):
 
 
 def polarity(symbol):
-    auth = tweepy.OAuthHandler(ct.consumer_key, ct.consumer_secret)
-    auth.set_access_token(ct.access_token, ct.access_token_secret)
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
     user = tweepy.API(auth)
 
-    tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(ct.num_of_tweets)
+    tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
     tweet_list = []
     s='\"stylesheet\"'
     l='\"{{ url_for(\'static\',filename=\'style2.css\')}}\">'
