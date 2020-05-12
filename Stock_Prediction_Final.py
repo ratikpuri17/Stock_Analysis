@@ -41,7 +41,6 @@ consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
 access_token = os.environ['TWITTER_ACCESS_TOKEN']
 access_secret = os.environ['TWITTER_ACCESS_SECRET']
 
-heroku config:add TWITTER_ACCESS_SECRET=DwmcoE3D8jfuea4uWUv9m3fkZMGRQpFFnITavNgEUCHjr
 
 
 num_of_tweets=int(20)
