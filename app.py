@@ -21,18 +21,18 @@ app = Flask(__name__,static_folder="C:\\Users\\Ratik\\Desktop\\Project\\static")
 
 @app.route('/')
 def home():
-    l=[]
-    path='C:\\Users\\Ratik\\Desktop\\Project\\static\\images'
-    for files in os.walk(path):
-    #     for name in files:
-    #         print(name)
-        l.append(files)
+    # l=[]
+    # path='C:\\Users\\Ratik\\Desktop\\Project\\static\\images'
+    # for files in os.walk(path):
+    # #     for name in files:
+    # #         print(name)
+    #     l.append(files)
 
-    g=l[0][2]
+    # g=l[0][2]
 
-    for i in g:
-        # print(path+"\\"+i)
-        os.remove(path+"\\"+i)
+    # for i in g:
+    #     # print(path+"\\"+i)
+    #     os.remove(path+"\\"+i)
 
     return render_template('base2.html')
 
