@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import numpy as np
 from Stock_Prediction_Final import *
 from flask import Flask, request, jsonify, render_template
