@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from Stock_Prediction_Final import *
 from flask import Flask, request, jsonify, render_template
 from flask import Response
