@@ -42,27 +42,7 @@ def predict():
     # present=(stock['symbol']==vals[0]).sum()
     present=0
     flag=0
-
-    print("Checking in nsepy.txt")
-    with open('nsepy.txt','r') as f:
-
-        while(True):
-
-            l=f.readline()
-
-            if(not l):
-                break
-
-            g=l.split('\n')
-            if(g[0]==vals[0]):
-                present=1
-                flag=2
-                break
-        
-
-
-    if present==0:
-        with open('symbolfile.txt','r') as f:
+    with open('symbolfile.txt','r') as f:
     
             while(True):
 
@@ -76,10 +56,32 @@ def predict():
                     present=1
                     flag=1
                     break
+    
         
 
-        if(present==0):
-            return render_template('error1.html')
+
+    if present==0:
+        
+        # print("Checking in nsepy.txt")
+        # with open('nsepy.txt','r') as f:
+
+        #     while(True):
+
+        #         l=f.readline()
+
+        #         if(not l):
+        #             break
+
+        #         g=l.split('\n')
+        #         if(g[0]==vals[0]):
+        #             present=1
+        #             flag=2
+        #             break
+        
+
+        # if(present==0):
+        return render_template('error1.html')
+
     print("-------------------------------")
     print(vals[3])
     print('--------------------------------')

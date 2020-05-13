@@ -51,14 +51,14 @@ num_of_tweets=int(20)
 
 def get_stock_data(symbol, from_date, to_date,m):
     #data = yf.download(symbol, start=from_date, end=to_date)
-    if(m==1):
-        data=web.DataReader(symbol,data_source='yahoo',start=from_date,end=to_date)
+    # if(m==1):
+    data=web.DataReader(symbol,data_source='yahoo',start=from_date,end=to_date)
     
-    else:
-        # print(from_date)
-        lsd=from_date.split('-')
-        ltd=to_date.split('-')
-        data=get_history(symbol,start=date(int(lsd[0]),int(lsd[1]),int(lsd[2])),end=date(int(ltd[0]),int(ltd[1]),int(ltd[2])))
+    # else:
+    #     # print(from_date)
+    #     lsd=from_date.split('-')
+    #     ltd=to_date.split('-')
+    #     data=get_history(symbol,start=date(int(lsd[0]),int(lsd[1]),int(lsd[2])),end=date(int(ltd[0]),int(ltd[1]),int(ltd[2])))
     #data=web.DataReader(symbol,from_date,to_date,data_source='yahoo')
     df = pd.DataFrame(data=data)
 
