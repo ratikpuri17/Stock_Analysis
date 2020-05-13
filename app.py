@@ -5,6 +5,7 @@ from Stock_Prediction_Final import *
 from flask import Flask, request, jsonify, render_template
 from flask import Response
 import pickle
+import glob
 
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -19,19 +20,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    l=[]
-    # path='C:\\Users\\Ratik\\Desktop\\Project\\static\\images'
+    
     path=os.getcwd() + '\\static\\images'
-    for files in os.walk(path):
-    #     for name in files:
-    #         print(name)
-        l.append(files)
+    
+    for file in glob.glob(path+"\\*.png"):
+        if(os.path.exists(path+"\\"+file)):
+            os.remove(path+"\\"+file)
 
-    g=l[0][2]
-
-    for i in g:
-        # print(path+"\\"+i)
-        os.remove(path+"\\"+i)
 
     return render_template('base2.html')
 
