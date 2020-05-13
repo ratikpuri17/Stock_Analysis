@@ -62,7 +62,7 @@ def predict():
 
 
     if present==0:
-         with open('symbolfile.txt','r') as f:
+        with open('symbolfile.txt','r') as f:
     
             while(True):
 
