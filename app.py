@@ -104,6 +104,10 @@ def predict():
 def fetch():
     return render_template('stock_data.html')
 
+@app.route('/stock_symbols',methods=['GET'])
+def stock_symbols():
+    return render_template('stock_symbolfile.html')
+
 @app.route('/tweet',methods=['GET'])
 def tweet():
     return render_template('tweets.html')

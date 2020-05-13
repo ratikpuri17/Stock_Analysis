@@ -9,6 +9,9 @@
 	<link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
   <script>
 
+      function setSymbol(x){
+        document.getElementById("ss").value=x;
+    }
       function loading(){
           d=document.getElementById("text")
           d.innerHTML+="<div class='load'>Loading !!!</div>";
@@ -18,11 +21,16 @@
 </head>
 <body>
 	<h1> Stock Analysis </h1>
+
+  <form id="symb" action="{{ url_for('stock_symbols')}}" method="get">
+      <button id="bt" type="submits" class="button">Check Stock Symbols</button>
+    </form>
+
 	<form id="issue" onsubmit="loading()" action="{{ url_for('predict')}}"method="post">
     <div class="element">
       <label for="symbol">Stock Symbol :</label>
     	<!-- <input type="text" class="input" name="Stock symbol" placeholder="Stock symbol" required="required" class="input" />
- -->
+ -->  
       <input list="symbols" name="symbol" required="required" class="input">
 <datalist id='symbols'>
 <!-- <option value='20MICRONS'>
@@ -10491,7 +10499,7 @@
 <option value='ZYNE'>
 <option value='ZYXI'>
 </datalist>
-
+ 
       <br>
     </div>
     <div class="element">
