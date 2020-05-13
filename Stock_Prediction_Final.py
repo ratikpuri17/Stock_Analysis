@@ -30,6 +30,7 @@ from keras.layers import LSTM
 from keras.layers import Dropout
 from sklearn.preprocessing import MinMaxScaler
 from nsepy import get_history
+from datetime import date
 # import mpld3
 # import pylab
 # from matplotlib.backends.backend_agg import FigureCanvasAgg
