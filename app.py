@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')
 import numpy as np
-from Stock_Prediction_Final2 import *
+from Stock_Prediction_Final import *
 from flask import Flask, request, jsonify, render_template
 from flask import Response
 import pickle
