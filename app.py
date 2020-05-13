@@ -1,13 +1,11 @@
 import matplotlib
 matplotlib.use('Agg')
 import numpy as np
-from Stock_Prediction_Final import *
+from Stock_Prediction_Final2 import *
 from flask import Flask, request, jsonify, render_template
 from flask import Response
 import pickle
 
-n=0
-m=0
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
@@ -21,18 +19,19 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # l=[]
+    l=[]
     # path='C:\\Users\\Ratik\\Desktop\\Project\\static\\images'
-    # for files in os.walk(path):
-    # #     for name in files:
-    # #         print(name)
-    #     l.append(files)
+    path=os.getcwd() + '\\static\\images'
+    for files in os.walk(path):
+    #     for name in files:
+    #         print(name)
+        l.append(files)
 
-    # g=l[0][2]
+    g=l[0][2]
 
-    # for i in g:
-    #     # print(path+"\\"+i)
-    #     os.remove(path+"\\"+i)
+    for i in g:
+        # print(path+"\\"+i)
+        os.remove(path+"\\"+i)
 
     return render_template('base2.html')
 
@@ -47,6 +46,7 @@ def predict():
     # stock=pd.read_csv('stock_symbol')
     # present=(stock['symbol']==vals[0]).sum()
     present=0
+    flag=0
     with open('symbolfile.txt','r') as f:
 
         while(True):
@@ -59,29 +59,48 @@ def predict():
             g=l.split('\n')
             if(g[0]==vals[0]):
                 present=1
+                flag=1
                 break
 
 
     if present==0:
-        return render_template('error1.html')
+
+        # Check in nsepy.txt
+        print("Checking in nsepy.txt")
+        with open('nsepy.txt','r') as f:
+
+            while(True):
+
+                l=f.readline()
+
+                if(not l):
+                    break
+
+                g=l.split('\n')
+                if(g[0]==vals[0]):
+                    present=1
+                    flag=2
+                    break
+
+        if(present==0):
+            return render_template('error1.html')
     print("-------------------------------")
     print(vals[3])
     print('--------------------------------')
-    global n
-    n+=1
+    
     if(len(vals[3])==0):
         print("DEFAULT")
-        s,seed_=recommending(vals[0],vals[1],vals[2],n)
+        s,seed_=recommending(vals[0],vals[1],vals[2],flag)
         
     else: 
-        s,seed_=recommending(vals[0],vals[1],vals[2],n,vals[3])
+        s,seed_=recommending(vals[0],vals[1],vals[2],flag,vals[3])
 
    #  return render_template('untitled1.html', name = 'new_plot',
    # url ='/static/images/new_plot.png')
     # output = round(prediction[0], 2)
     random.seed(seed_)
     r=random.randint(1,1e9)
-    return render_template('index.html', prediction_text=s,img=vals[3],num=n,r=r)
+    return render_template('index.html', prediction_text=s,img=vals[3],r=r)
 
 @app.route('/fetch',methods=['GET'])
 def fetch():

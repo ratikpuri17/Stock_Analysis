@@ -17,6 +17,7 @@ from Tweet import Tweet
 import pandas_datareader.data as web
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.api import ExponentialSmoothing, SimpleExpSmoothing, Holt
+import os
 import os.path
 from sklearn.metrics import mean_squared_error
 from os import path
@@ -28,6 +29,7 @@ from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Dropout
 from sklearn.preprocessing import MinMaxScaler
+
 # import mpld3
 # import pylab
 # from matplotlib.backends.backend_agg import FigureCanvasAgg
@@ -46,10 +48,16 @@ access_secret = os.environ['TWITTER_ACCESS_SECRET']
 num_of_tweets=int(20)
 
 
-n=0
-def get_stock_data(symbol, from_date, to_date):
+def get_stock_data(symbol, from_date, to_date,m):
     #data = yf.download(symbol, start=from_date, end=to_date)
-    data=web.DataReader(symbol,data_source='yahoo',start=from_date,end=to_date)
+    if(m==1):
+        data=web.DataReader(symbol,data_source='yahoo',start=from_date,end=to_date)
+    
+    else:
+        # print(from_date)
+        lsd=from_date.split('-')
+        ltd=to_date.split('-')
+        data=get_history(symbol,start=date(int(lsd[0]),int(lsd[1]),int(lsd[2])),end=date(int(ltd[0]),int(ltd[1]),int(ltd[2])))
     #data=web.DataReader(symbol,from_date,to_date,data_source='yahoo')
     df = pd.DataFrame(data=data)
 
@@ -59,17 +67,14 @@ def get_stock_data(symbol, from_date, to_date):
 
     # df = df[['Close', 'HighLoad', 'Change', 'Volume']]
     df.to_html('templates/stock_data.html')
-    # with open('templates/stock_data.html','r') as f:
-    #     with open('templates/newfile.html','w') as f2: 
-    #         f2.write("""<form action="{{ url_for('home')}}" method="get">
-    #   <button type="submits" class="button">Home</button>
-    # </form>""")
-    #         f2.write(f.read())
-    # os.rename('templates/newfile.html','templates/stock_data.html')
-    # with open('templates/stock_data.html','a') as f:
-    #     f.write("""<form action="{{ url_for('predict')}}" method="get">
-    #   <button type="submits" class="button">Home</button>
-    # </form>""")
+    with open('templates/stock_data.html','r') as f:
+        with open('templates/newfile.html','w') as f2: 
+            f2.write("""<button onclick="goBack()">Back</button> <script> function goBack() { window.history.back(); }</script>""")
+            f2.write(f.read())
+    os.remove('templates/stock_data.html')
+    os.rename('templates/newfile.html','templates/stock_data.html')
+
+
     return df
 
 
@@ -415,8 +420,8 @@ def LSTM_(df,seed_):
 
     
 def retrieving_tweets_polarity(symbol):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
+    auth = tweepy.OAuthHandler(ct.consumer_key, ct.consumer_secret)
+    auth.set_access_token(ct.access_token, ct.access_secret)
     user = tweepy.API(auth)
 
     tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
@@ -454,12 +459,14 @@ def retrieving_tweets_polarity(symbol):
 
 
 def polarity(symbol):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
+    auth = tweepy.OAuthHandler(ct.consumer_key, ct.consumer_secret)
+    auth.set_access_token(ct.access_token, ct.access_secret)
     user = tweepy.API(auth)
 
     tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
     tweet_list = []
+
+    tweet_list.append("""<button onclick="goBack()">Back</button> <script> function goBack() { window.history.back(); }</script>""")
     s='\"stylesheet\"'
     l='\"{{ url_for(\'static\',filename=\'style2.css\')}}\">'
     tweet_list.append('<link rel='+ s + ' href=' + l)
@@ -481,7 +488,6 @@ def polarity(symbol):
         tweet_list.append(tw)
         sentiment_dict = sid_obj.polarity_scores(tw)
         
-        tweet_list.append(tw)
         tweet_list.append("</pre>")
         tweet_list.append("</div>")
         
@@ -497,7 +503,7 @@ def polarity(symbol):
             # print("Neutral") 
             net_count+=1
     
-    np.savetxt('tweet_file.html',tweet_list, fmt='%s',encoding="utf-8")
+    np.savetxt('templates/tweets.html',tweet_list,newline='\n',fmt="%s",encoding="utf-8")
     if pos_count>neg_count and pos_count>net_count:
         # print("Net Sentiment is Positive")
         return 1
@@ -556,10 +562,9 @@ def stock_forecasting(ts,algorithm,seed_):
 
 def recommending(symbol,start_date,end_date,m,algorithm="default"):
     
-    global n
-    n=m
+    
     # Get stock data
-    df=get_stock_data(symbol, start_date, end_date)
+    df=get_stock_data(symbol, start_date, end_date,m)
 
     # Forecast the data
 
