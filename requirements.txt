@@ -18,5 +18,6 @@ glob2==0.6
 pickleshare==0.7.4
 nltk==3.3
 spacy==2.1.4
+en-core-web-sm==2.1.0
 wordcloud==1.7.0
 jsonschema==2.6.0
