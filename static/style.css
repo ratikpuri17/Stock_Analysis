@@ -86,10 +86,7 @@ input, label, select {
   margin-bottom: 30px;
   
 }
-#symb{
-	all:unset;
 
-}
 #bt{
 	background-color: blue;
 	border-radius: 2px;
@@ -100,4 +97,8 @@ input, label, select {
 	display: inline-block;
 	margin: 5px 15px 15px 480px;
 	font-size: 16px;
+}
+#symb{
+	all:unset;
+
 }

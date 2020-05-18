@@ -19,8 +19,11 @@
       <button type="submits" class="button">Data</button>
     </form>
     <!-- </form>  -->
-  <form action="{{ url_for('tweet')}}" method="get">
+  <!-- <form action="{{ url_for('tweet')}}" method="get">
       <button type="submits" class="button">Tweets</button>
+    </form> -->
+  <form action="{{ url_for('trends')}}" method="get">
+      <button type="submits" class="button">View Trends</button>
     </form>
   <form action="{{ url_for('home')}}" method="get">
       <button type="submits" class="button">Home</button>

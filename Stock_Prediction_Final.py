@@ -343,11 +343,10 @@ def LSTM_(df,seed_):
     ts=df['Close']
     ts=pd.DataFrame(ts)
     data=ts
-    look_back=int(len(data)*0.02)
+    look_back=int(len(data)*0.04)
     sc = MinMaxScaler(feature_range = (0, 1))
     data_scaled = sc.fit_transform(data)
 
-    # Creating a data structure with 60 timesteps and 1 output
     x = []
     y = []
     for i in range(look_back, len(data)):

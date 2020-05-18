@@ -3,15 +3,13 @@
 <head>
 	<title> Stock Analysis</title>
   <header>
-    <center>The following website helps to analyze Stock data through various algorithms and graphs. Choose the default option to run all algorithms. It also fetches live tweets that mention the chosen stock. Type on the go to select a stock symbol from the dropdown list.
+    <center>The following website helps to analyze Stock data through various algorithms and graphs. Choose the default option to run all algorithms. It also fetches trends about the stock market. Type on the go to select a stock symbol from the dropdown list.
     </center>
+
   </header>
 	<link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
   <script>
 
-      function setSymbol(x){
-        document.getElementById("ss").value=x;
-    }
       function loading(){
           d=document.getElementById("text")
           d.innerHTML+="<div class='load'>Loading !!!</div>";

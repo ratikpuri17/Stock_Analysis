@@ -2,10 +2,12 @@ import matplotlib
 matplotlib.use('Agg')
 import numpy as np
 from Stock_Prediction_Final import *
+from Trend_Analysis import *
 from flask import Flask, request, jsonify, render_template
 from flask import Response
 import pickle
 import glob
+import os
 
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -24,8 +26,10 @@ def home():
     path=os.getcwd() + '\\static\\images'
     
     for file in glob.glob(path+"\\*.png"):
-        if(os.path.exists(path+"\\"+file)):
-            os.remove(path+"\\"+file)
+        f=file.split('\\')
+        # print(f[7])
+        if(os.path.exists(file) and f[7]!='cloud.png'):
+            os.remove(file)
 
 
     return render_template('base2.html')
@@ -107,6 +111,12 @@ def fetch():
 @app.route('/stock_symbols',methods=['GET'])
 def stock_symbols():
     return render_template('stock_symbolfile.html')
+
+@app.route('/trends',methods=['GET'])
+def trends():
+    wordcloud=fetch_trend()
+    wordcloud.to_file(os.getcwd()+'\\static\\cloud.png')
+    return render_template('trends.html')
 
 @app.route('/tweet',methods=['GET'])
 def tweet():
