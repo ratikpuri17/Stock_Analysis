@@ -115,7 +115,7 @@ def stock_symbols():
 @app.route('/trends',methods=['GET'])
 def trends():
     wordcloud=fetch_trend()
-    wordcloud.to_file(os.getcwd()+'\\static\\cloud.png')
+    wordcloud.to_file('static\\cloud.png')
     return render_template('trends.html')
 
 @app.route('/tweet',methods=['GET'])
