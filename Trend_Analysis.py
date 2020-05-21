@@ -20,7 +20,7 @@ nlp=spacy.load('en_core_web_sm')
 
 def tokenize(text):
     lda_tokens = []
-    tokens = parser(text)
+    tokens = nlp(text)
     for token in tokens:
         if token.orth_.isspace():
             continue
