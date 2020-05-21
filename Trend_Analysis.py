@@ -1,8 +1,8 @@
 
 import nltk
 import spacy
-spacy.load('en')
-from spacy.lang.en import English
+# spacy.load('en')
+# from spacy.lang.en import English
 from nltk.corpus import wordnet as wn
 from nltk.stem.wordnet import WordNetLemmatizer
 import tweepy
@@ -14,8 +14,8 @@ import gensim
 from gensim import corpora
 from wordcloud import WordCloud
 
-parser = English()
-
+# parser = English()
+nlp=spacy.load('en_core_web_sm')
 
 
 def tokenize(text):
@@ -108,37 +108,30 @@ def fetch_trend():
 
     return all_words(ldamodel)
 
+
 def all_words(ldamodel):
 
-    l=ldamodel.show_topics(num_topics=10, num_words=10, log=False, formatted=False)
+    l=ldamodel.show_topics(num_topics=10, num_words=20, log=False, formatted=False)
+#     print(len(l))
+#     print(l)
 
-
-    words=[]
+    all_words=[]
 
     for topic in range(len(l)):
         
-        topics=[]
-        tp=l[topic][1]
+        words_array=l[topic][1]
         
-        for j in range(len(l)):
-            
-            topics.append(tp[j][0])
+        for words in words_array:
+            all_words.append(words[0])
         
+        
+
+    s=set(all_words)
     
-    
-    words.append(topics)
+    g=list(s)
 
 
-    s=set()
-    for i in range(len(words)):
-        
-        for j in words[i]:
-            
-            s.add(j)
-
-    l=list(s)
-
-    return Word_Cloud(l)
+    return Word_Cloud(g)
 
 
 def Word_Cloud(l):
