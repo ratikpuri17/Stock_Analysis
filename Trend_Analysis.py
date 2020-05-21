@@ -1,4 +1,4 @@
-
+import os
 import nltk
 import spacy
 # spacy.load('en')
@@ -75,7 +75,7 @@ access_secret = os.environ['TWITTER_ACCESS_SECRET']
 def fetch_trend():
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
+    auth.set_access_token(access_token, access_secret)
 
     api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
     tweets = api.user_timeline(screen_name='YahooFinance', count=100)
