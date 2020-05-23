@@ -1,8 +1,6 @@
 import os
 import nltk
 import spacy
-# spacy.load('en')
-# from spacy.lang.en import English
 from nltk.corpus import wordnet as wn
 from nltk.stem.wordnet import WordNetLemmatizer
 import tweepy
@@ -14,7 +12,6 @@ import gensim
 from gensim import corpora
 from wordcloud import WordCloud
 
-# parser = English()
 nlp=spacy.load('en_core_web_sm')
 
 
@@ -33,9 +30,6 @@ def tokenize(text):
     return lda_tokens
 
 
-# nltk.download('wordnet')
-
-
 def get_lemma(word):
     lemma = wn.morphy(word)
     if lemma is None:
@@ -44,10 +38,8 @@ def get_lemma(word):
         return lemma
     
 
-def get_lemma2(word):
-    return WordNetLemmatizer().lemmatize(word)
-
-
+# def get_lemma2(word):
+#     return WordNetLemmatizer().lemmatize(word)
 
 
 def prepare_text_for_lda(text):

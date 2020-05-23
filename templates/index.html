@@ -7,21 +7,11 @@
 </head>
 <body id="body">
 	<h1> Stock Analysis </h1>
-	<!-- <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="Stock symbol" placeholder="Stock symbol" required="required" />
-        <input type="date" name="start date" placeholder="start date" required="required" />
-		<input type="date" name="end date" placeholder="end date" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Analyze</button>
-    
-  </form>
-  -->
+	
   <form action="{{ url_for('fetch')}}" method="get">
       <button type="submits" class="button">Data</button>
     </form>
-    <!-- </form>  -->
-  <!-- <form action="{{ url_for('tweet')}}" method="get">
-      <button type="submits" class="button">Tweets</button>
-    </form> -->
+  
   <form action="{{ url_for('trends')}}" method="get">
       <button type="submits" class="button">View Trends</button>
     </form>
@@ -35,17 +25,12 @@
  </div>
    <script>
 
-      // localStorage.clear();
       var img_name= '{{ img }}';
       
       var r ='{{r}}';
-      // var img = document.createElement('img'); 
-      
-      // alert(img_name);
       
       if(img_name=="MOVING AVERAGE"){
           var img = new Image();
-          // s="\\static\\images\\foo_ma"+r+".png";
 
           img.src = "\\static\\images\\foo_ma"+r+".png";
           img.alt="Image";
@@ -91,7 +76,7 @@
 
   </script>
    
-   <!-- <img src="\static\images\foo_arima.png" alt="Image 1"/> -->
+
  <footer>
   <p>Designed by: Ratik Puri</p>
   <p>Contact information: <a href = "mailto: ratikpuri1998@gmail.com">ratikpuri1998@gmail.com</a>

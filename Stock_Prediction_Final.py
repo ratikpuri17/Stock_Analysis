@@ -31,12 +31,6 @@ from keras.layers import Dropout
 from sklearn.preprocessing import MinMaxScaler
 from nsepy import get_history
 from datetime import date
-# import mpld3
-# import pylab
-# from matplotlib.backends.backend_agg import FigureCanvasAgg
-# from matplotlib.figure import Figure
-# import base64
-# from io import BytesIO
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 consumer_key = os.environ['TWITTER_CONSUMER_KEY']
@@ -50,23 +44,11 @@ num_of_tweets=int(20)
 
 
 def get_stock_data(symbol, from_date, to_date,m):
-    #data = yf.download(symbol, start=from_date, end=to_date)
-    # if(m==1):
+    
     data=web.DataReader(symbol,data_source='yahoo',start=from_date,end=to_date)
     
-    # else:
-    #     # print(from_date)
-    #     lsd=from_date.split('-')
-    #     ltd=to_date.split('-')
-    #     data=get_history(symbol,start=date(int(lsd[0]),int(lsd[1]),int(lsd[2])),end=date(int(ltd[0]),int(ltd[1]),int(ltd[2])))
-    #data=web.DataReader(symbol,from_date,to_date,data_source='yahoo')
     df = pd.DataFrame(data=data)
 
-    # df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
-    # df['HighLoad'] = (df['High'] - df['Close']) / df['Close'] * 100.0
-    # df['Change'] = (df['Close'] - df['Open']) / df['Open'] * 100.0
-
-    # df = df[['Close', 'HighLoad', 'Change', 'Volume']]
     df.to_html('templates/stock_data.html')
     with open('templates/stock_data.html','r') as f:
         with open('templates/newfile.html','w') as f2: 
@@ -75,10 +57,7 @@ def get_stock_data(symbol, from_date, to_date,m):
     os.remove('templates/stock_data.html')
     os.rename('templates/newfile.html','templates/stock_data.html')
 
-
     return df
-
-
 
 def test_stationarity(timeseries):
     
@@ -87,7 +66,6 @@ def test_stationarity(timeseries):
     
     rolmean=timeseries.rolling(window=20).mean()
     rolstd=timeseries.rolling(window=20).std()
-
 
     #Perform Dickey-Fuller test:
     # print('Results of Dickey-Fuller Test:')
@@ -148,16 +126,6 @@ def inverse(p,df):
     return ppi
     
     
-    
-
-# tss=make_data_stationary(ts)
-
-
-# # Forecasting
-
-# In[109]:
-
-
 def moving_average(df,w,seed_):
     
     tss=df['Close']
@@ -195,23 +163,6 @@ def moving_average(df,w,seed_):
     p=pd.DataFrame(p_original[1:],index=df.index)
     
 
-
-    # fig = Figure(figsize=(5, 4), dpi=100)
-    # A canvas must be manually attached to the figure (pyplot would automatically
-    # do it).  This is done by instantiating the canvas with the figure as
-    # argument.
-    # canvas = FigureCanvasAgg(fig)
-
-    # Do some plotting.
-    # ax = fig.add_subplot(111)
-    # ax.plot(p,label="Predicted",color="blue")
-    # ax.plot(df['Close'],label="Actual",color="red")
-    # ax.legend()
-    # ax.set_xticklabels(ax.get_xticklabels(),rotation=90)
-    # Option 1: Save the figure to a file; can also be a file-like object (BytesIO,
-    # etc.).
-    # fig.savefig("static/images/foo_ma"+str(n)+".png")
-    # fig.clf()
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.plot(df['Close'],label="Actual",color="red")
@@ -219,25 +170,10 @@ def moving_average(df,w,seed_):
     plt.legend()
     plt.title('Moving Average RMSE : %.4f' % error)
     
-   
-    # plt.show()
-    
-    # zoom plot
-    # plt.plot(X[w:100],label="Actual")
-    # plt.plot(pred[w:100], color='blue',label="Predicted")
-    # plt.legend()
-    # plt.show()
-    global n
-    # import os
-    # for i in range(n):
-    #     if os.path.exists('static/images/foo_ma'+str(i)+'.png'):
-    #         os.remove('static/images/foo_ma'+str(i)+'.png')
     random.seed(seed_)
     plt.savefig('static/images/foo_ma'+str(random.randint(1,1e9))+'.png',bbox_inches = "tight")
     plt.close()
-    # num_fig+=1
-#     history.append(pred)
-    #history=np.append(history,pred)
+
     return df['Close'].values[-1],p_original[-1],error
 
 
@@ -261,10 +197,6 @@ def exponential_smoothing(df,alpha,seed_):
     mse=mse/len(X)
     mad=mad/len(X)
     rmse=math.sqrt(mse)
-    # print("Mean Squared Error : ",mse)
-    # print("Mean Absolute Deviation : ",mad)
-    # print("Root Mean Squared Error : ",rmse)
-    #plt.figure(figsize=(16,8))
     
     f=forecasts
     f=pd.DataFrame(f,index=ts.index)
@@ -276,21 +208,10 @@ def exponential_smoothing(df,alpha,seed_):
     plt.legend()
     # plt.show()
     
-    global n
     plt.savefig('static/images/foo_es'+str(random.randint(1,1e9))+'.png',bbox_inches = "tight")
     plt.clf()
-    # num_fig+=1
-    # plt.legend(loc='best')
-    # plt.show()
+    
     return (X[len(X)-1],forecasts[len(forecasts)-1],rmse)
-
-# In[95]:
-
-
-# exponential_smoothing(tss,0.2)
-
-
-# In[107]:
 
 
 def ARIMA_forecast(df,seed_):
@@ -298,38 +219,28 @@ def ARIMA_forecast(df,seed_):
     tss=df['Close']
     ts_log=np.log(df['Close'])
     ts=make_data_stationary(df['Close'])
-#     ts=ts.values
     model=ARIMA(ts,order=(2,1,0))
     results_AR=model.fit(disp=-1)
     pred=results_AR.fittedvalues
-#     print(len(pred))
-#     plt.plot(ts.values,color='blue')
-#     plt.plot(pred.values,color='red')
-#     mse_s=sum((pred.values-ts.values[1:])**2)/len(pred)
-#     plt.title('MSE : %.4f' % mse_s)
 
     predictions_ARIMA_diff=pd.Series(results_AR.fittedvalues, copy=True)
     
     predictions_ARIMA_diff_cumsum=predictions_ARIMA_diff.cumsum()
-    # print(predictions_ARIMA_diff_cumsum.head())
-#     print(len(predictions_ARIMA_diff_cumsum))
+    
     prediction_ARIMA_log=pd.Series(ts_log)
     
     prediction_ARIMA_log=prediction_ARIMA_log.add(predictions_ARIMA_diff_cumsum,fill_value=0)
     
     predictions_ARIMA=np.exp(prediction_ARIMA_log)
     pa=pd.DataFrame(predictions_ARIMA,index=df.index)
-    plt.plot(predictions_ARIMA,color='red',label='Predicted')
-    plt.plot(df['Close'],color='blue',label='Actual')
-#     print(len(predictions_ARIMA),len(df['Close']))
     mse=(sum((predictions_ARIMA.values-df['Close'].values)**2))/len(predictions_ARIMA)
     rmse=math.sqrt(mse)
-    # print('ARIMA RMSE : %.4f' % mse)
-    # plt.title('ARIMA RMSE : %.4f' % rmse)
-    
+    plt.title(plt.title('ARIMA RMSE : %.4f' % rmse))
+    plt.plot(predictions_ARIMA,color='red',label='Predicted')
+    plt.plot(df['Close'],color='blue',label='Actual')
+    plt.legend()
     plt.xticks(rotation=45)
     plt.tight_layout()
-    global n
     random.seed(seed_)
     plt.savefig('static/images/foo_arima'+str(random.randint(1,1e9))+'.png',bbox_inches = "tight")
     plt.clf()
@@ -361,7 +272,6 @@ def LSTM_(df,seed_):
     model = Sequential()
     # Adding the first LSTM layer
     model.add(LSTM(units = 50, return_sequences = True, input_shape = (x_train.shape[1], 1)))
-    # model.add(Dropout(0.2))
 
     # Adding a second LSTM layer
     model.add(LSTM(units = 50, return_sequences = True))
@@ -376,10 +286,8 @@ def LSTM_(df,seed_):
     # Adding the output layer
     model.add(Dense(units = 1))
     
-    # Compiling the RNN
     model.compile(optimizer = 'adam', loss = 'mean_squared_error')
 
-    # Fitting the RNN to the Training set
     # Iterations is the number of batches needed to complete one epoch.
     model.fit(x_train, y_train, epochs = 50, batch_size = 32)
     
@@ -412,13 +320,12 @@ def LSTM_(df,seed_):
     plt.xticks(rotation=45)
     plt.tight_layout()
     # plt.show()
-    global n
     plt.savefig('static/images/foo_lstm'+str(random.randint(1,1e9))+'.png',bbox_inches = "tight")
     plt.clf()
     
     return (actual_price[-1],pred[-1],rmse)
 
-    
+## Using TextBlob Library
 def retrieving_tweets_polarity(symbol):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
@@ -427,12 +334,7 @@ def retrieving_tweets_polarity(symbol):
     tweets = tweepy.Cursor(user.search, q=str(symbol), tweet_mode='extended', lang='en').items(num_of_tweets)
 
     tweet_list = []
-    # b="""<form action="{{ url_for('predict')}}" method="get">
-    #   <button type="submits" class="button">Home</button>
-    # </form>"""
-    # tweet_list.append(b)
-    # tweet_list.append("<link rel='stylesheet' 
-    #     href='{{ url_for("static",filename="style2.css")}}'>")
+
     s='\"stylesheet\"'
     l='\"{{ url_for(\'static\',filename=\'style2.css\')}}\">'
     tweet_list.append('<link rel='+ s + ' href=' + l)
@@ -457,7 +359,7 @@ def retrieving_tweets_polarity(symbol):
     np.savetxt('templates/tweets.html',tweet_list,newline='\n',fmt="%s",encoding="utf-8")
     return global_polarity
 
-
+## Using VADER library
 def polarity(symbol):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
@@ -557,9 +459,6 @@ def stock_forecasting(ts,algorithm,seed_):
             return (D[0],D[1])
 
 
-# In[122]:
-
-
 def recommending(symbol,start_date,end_date,m,algorithm="default"):
     
     
@@ -586,6 +485,6 @@ def recommending(symbol,start_date,end_date,m,algorithm="default"):
         s="According to the predictions and twitter sentiment analysis -> Investing in %s is a BAD idea!" % str(symbol)
 
     return s,seed_
-# In[123]:
+
 # recommending('GOOG','3/12/2019','31/3/2020')
 

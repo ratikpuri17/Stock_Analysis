@@ -1,9 +1,0 @@
-{
-	"name": "stock_analysis",
-	"version" : "1.0.0",
-	"scripts" : {
-		"start" : "python app.py"
-	},
-	"author" : "Ratik Puri",
-	"license" : "ISC"
-}
